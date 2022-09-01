@@ -43,18 +43,19 @@ try:
       
 except URLError as e:
   streamlit.error()
-
-#DONT RUN PAST CODE
-streamlit.stop()
-
-#import snowflake.connector
-
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-my_cur.execute("SELECT * from PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST")
-my_data_row = my_cur.fetchall()
+streamlit.stop() #DONT RUN PAST CODE
 streamlit.header("List of Fruits:")
-streamlit.dataframe(my_data_row)
+#snow flake related functions
+def get_fruit_load_list():
+  with my_cnx.cursor() as  my_cur:
+    my_cur.execute("SELECT * from PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST")
+    return my_cur.fetchall()
+
+#Added a button to get fruit list
+if streamlit.button('get fruit load list'):
+  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+  my_data_rows=get_fruit_load_list()
+  streamlit.dataframe(my_data_row)
 
 #adding one more text box
 streamlit.header("Add Fruit!!")
