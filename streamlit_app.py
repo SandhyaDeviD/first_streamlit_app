@@ -43,7 +43,7 @@ try:
       
 except URLError as e:
   streamlit.error()
-streamlit.stop() #DONT RUN PAST CODE
+#streamlit.stop() 
 streamlit.header("List of Fruits:")
 #snow flake related functions
 def get_fruit_load_list():
